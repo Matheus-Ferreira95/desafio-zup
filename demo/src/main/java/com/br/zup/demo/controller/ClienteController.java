@@ -1,16 +1,20 @@
 package com.br.zup.demo.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.br.zup.demo.domain.Cliente;
 import com.br.zup.demo.dto.InsertClienteDTO;
 import com.br.zup.demo.service.ClienteService;
 
@@ -33,6 +37,10 @@ public class ClienteController {
 	public ModelAndView cadastrarCliente(@Valid InsertClienteDTO dto, BindingResult result, RedirectAttributes redirectAttributes) {	
 		ModelAndView mv = new ModelAndView();
 		
+		if (!result.hasErrors()) {			
+			clienteService.checkFields(dto, result);
+		}
+		
 		if(result.hasErrors()) {		
 			mv.setViewName("form/cadastro");
 			mv.setStatus(HttpStatus.BAD_REQUEST);
@@ -45,6 +53,19 @@ public class ClienteController {
 		redirectAttributes.addFlashAttribute("message", "Cliente cadastrado com sucesso");
 		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 		return mv;
-	}	
+	}
+	
+	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	public ModelAndView listarClientes() {
+		ModelAndView mv = new ModelAndView("listagemCliente");
+		List<Cliente> clientes = clienteService.findAll();
+		mv.addObject("clientes", clientes);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/deletar/{id}", method = RequestMethod.GET)
+	public String deleteCliente(@PathVariable Integer id) {
+		clienteService.deleteById(id);
+		return "redirect:/cliente/listar";
+	}
 }
-

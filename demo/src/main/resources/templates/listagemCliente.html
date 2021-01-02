@@ -1,0 +1,33 @@
+<html>
+	<head th:replace="~{base :: head}"></head>	
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<body>	
+	<div th:fragment="logo" class="logo-container mb-3 p-3 d-flex justify-content-between">
+		<span class="logo">Cadastro de clientes</span>
+		<a href="/cliente/cadastro" style="text-decoration:none"><span class="logo mt-3">Cadastrar</span></a>
+	</div>
+	
+	<table class="container table table-striped">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Email</th>
+				<th>CPF</th>
+				<th>Data de Nascimento</th>
+				<th>Deletar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="cliente : ${clientes}"> 
+				<td><span th:text="${cliente.nome}"></span></td>
+				<td><span th:text="${cliente.email}"></span></td>
+				<td><span th:text="${cliente.cpf}"></span></td>
+				<td><span th:text="${cliente.dataDeNascimento}"></span></td>
+				<td><a th:href="@{/cliente/deletar/{id}(id=${cliente.id})}"><i class="far fa-trash-alt"></i></a></td>
+			</tr>
+		</tbody>	
+	</table>	
+	
+</body>
+
+</html>

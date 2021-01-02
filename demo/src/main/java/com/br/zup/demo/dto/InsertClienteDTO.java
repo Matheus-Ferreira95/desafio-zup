@@ -11,12 +11,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.br.zup.demo.service.validation.ClienteInsert;
-
 import lombok.Getter;
 import lombok.Setter;
 
-@ClienteInsert
 @Getter
 @Setter
 public class InsertClienteDTO {
