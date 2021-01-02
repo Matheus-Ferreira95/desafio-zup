@@ -1,0 +1,42 @@
+<html>
+	<head th:replace="~{base :: head}"></head>
+<body>	
+	<div th:fragment="logo" class="logo-container mb-3 p-3 d-flex justify-content-between">
+	<span class="logo">Cadastro de clientes</span>
+	<span class="logo mt-3">Listar</span>
+</div>
+	<div class="container">
+		
+	<div class="container formEvento">
+	
+		<form th:object="${insertClienteDTO}" class="container" action="/cliente/cadastrar" method="POST">
+			<label for="nome">Nome </label>
+			<input th:field="*{nome}" th:errorclass="is-invalid" class="form-control" placeholder="digite seu nome completo"/> 
+			<div th:errors="*{nome}" id="validationServer03Feedback" class="invalid-feedback"> 	erros do nome do cliente</div>	
+		
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="email">Email </label>
+					 <input th:field="*{email}" th:errorclass="is-invalid" class="form-control" placeholder="digite um email válido"/>
+					 <div th:errors="*{email}" id="validationServer03Feedback" class="invalid-feedback"> erros do email</div>
+				</div>
+							
+				<div class="input-field col s3">
+					<label for="cpf">CPF </label> 
+					<input th:field="*{cpf}" th:errorclass="is-invalid" class="form-control cpf-mask" placeholder="Ex.: 000.000.000-00" value="" name="horario"/>
+					<div th:errors="*{cpf}" id="validationServer03Feedback" class="invalid-feedback"> erros do CPF </div>
+				</div>
+				
+			<div class="input-field col s3">
+					<label for="dataDeNascimento">Data de Nascimento </label>
+					 <input type="date" th:field="*{dataDeNascimento}" th:errorclass="is-invalid" class="form-control" max="2999-12-31">
+					<div th:errors="*{dataDeNascimento}" id="validationServer03Feedback" class="invalid-feedback"> 	erros da data de nascimento	</div>
+				</div>			
+			</div>
+			<button class="btn btn-primary mt-3" type="submit">Salvar</button>
+			<div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"/>
+		</form>
+	</div>	
+</body>
+
+</html>
