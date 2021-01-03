@@ -26,6 +26,19 @@ public class ClienteService {
 	public Cliente insert(InsertClienteDTO clienteDTO) {		
 		return clienteRepository.save(toEntity(clienteDTO));		
 	}	
+	
+//	private Cliente toEntity(InsertClienteDTO clienteDTO) {
+//		return Cliente.builder()
+//				.cpf(clienteDTO.getCpf())
+//				.dataDeNascimento(clienteDTO.getDataDeNascimento())
+//				.email(clienteDTO.getEmail())
+//				.nome(clienteDTO.getNome())
+//				.build();			
+//	}	
+	
+	private Cliente toEntity(InsertClienteDTO clienteDTO) {
+		return ClienteMapper.INSTANCE.toCliente(clienteDTO);
+	}
 
 	public void deleteById(Integer id) {
 		clienteRepository.deleteById(id);		
@@ -33,19 +46,6 @@ public class ClienteService {
 	
 	public List<Cliente> findAllCustom(String orderBy, String direction) {
 		return clienteRepository.findAll(Sort.by(Direction.valueOf(direction), orderBy));
-	}
-	
-//	private Cliente toEntity(InsertClienteDTO clienteDTO) {
-//		Cliente entity = new Cliente();
-//		entity.setCpf(clienteDTO.getCpf());
-//		entity.setDataDeNascimento(clienteDTO.getDataDeNascimento());
-//		entity.setEmail(clienteDTO.getEmail());
-//		entity.setNome(clienteDTO.getNome());
-//		return entity;
-//	}	
-	
-	private Cliente toEntity(InsertClienteDTO clienteDTO) {
-		return ClienteMapper.INSTANCE.toCliente(clienteDTO);
 	}
 	
 	public void checkFields(InsertClienteDTO dto, BindingResult result) {
@@ -70,6 +70,6 @@ public class ClienteService {
 
 	private boolean ageValid(LocalDate age) {
 		LocalDate today = LocalDate.now();
-		return age.compareTo(today.minusYears(18)) <= 0 && age.compareTo(today.minusYears(100)) >= 100;
+		return age.compareTo(today.minusYears(18)) <= 0 && age.compareTo(today.minusYears(100)) >= 0;
 	}	
 }

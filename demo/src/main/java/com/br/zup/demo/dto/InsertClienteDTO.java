@@ -33,5 +33,4 @@ public class InsertClienteDTO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Past
 	private LocalDate dataDeNascimento;
-
 }
