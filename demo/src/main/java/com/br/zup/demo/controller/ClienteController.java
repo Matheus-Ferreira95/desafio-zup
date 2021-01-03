@@ -1,6 +1,5 @@
 package com.br.zup.demo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -60,7 +59,7 @@ public class ClienteController {
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public ModelAndView listarClientes() {
 		ModelAndView mv = new ModelAndView("listagemCliente");		
-		mv.addObject("clientes", new ArrayList<Cliente>());
+		mv.addObject("clientes", null);
 		return mv;
 	}
 	
@@ -70,10 +69,10 @@ public class ClienteController {
 		return "redirect:/cliente/listar";
 	}
 	
-	@RequestMapping(value = "/sort", method = RequestMethod.POST)
+	@RequestMapping(value = "/sort", method = RequestMethod.GET)
 	public String listar(String orderBy, String direction, Model model) {		
 		List<Cliente> clientes = clienteService.findAllCustom(orderBy, direction);
-		model.addAttribute("clientes", clientes);
+		model.addAttribute("clientes", clientes);		
 		return "listagemCliente";
 	}
 	

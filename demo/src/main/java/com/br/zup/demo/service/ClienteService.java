@@ -56,7 +56,7 @@ public class ClienteService {
 			result.rejectValue("email", "email já cadastrado", "Email já cadastrado");
 		}
 		if (!ageValid(dto.getDataDeNascimento())) {
-			result.rejectValue("dataDeNascimento", "idade inválida", "Necessário der maior de idade");
+			result.rejectValue("dataDeNascimento", "idade inválida", "Idade inválida, apenas idades entre 18 e 100 anos");
 		}			
 	}	
 	
@@ -69,7 +69,7 @@ public class ClienteService {
 	}
 
 	private boolean ageValid(LocalDate age) {
-		LocalDate today = LocalDate.now().minusYears(18);
-		return age.compareTo(today) <= 0;
-	}
+		LocalDate today = LocalDate.now();
+		return age.compareTo(today.minusYears(18)) <= 0 && age.compareTo(today.minusYears(100)) >= 100;
+	}	
 }
