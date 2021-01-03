@@ -1,5 +1,6 @@
 package com.br.zup.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -7,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,9 +59,8 @@ public class ClienteController {
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public ModelAndView listarClientes() {
-		ModelAndView mv = new ModelAndView("listagemCliente");
-		List<Cliente> clientes = clienteService.findAll();
-		mv.addObject("clientes", clientes);
+		ModelAndView mv = new ModelAndView("listagemCliente");		
+		mv.addObject("clientes", new ArrayList<Cliente>());
 		return mv;
 	}
 	
@@ -67,5 +68,17 @@ public class ClienteController {
 	public String deleteCliente(@PathVariable Integer id) {
 		clienteService.deleteById(id);
 		return "redirect:/cliente/listar";
+	}
+	
+	@RequestMapping(value = "/sort", method = RequestMethod.POST)
+	public String listar(String orderBy, String direction, Model model) {		
+		List<Cliente> clientes = clienteService.findAllCustom(orderBy, direction);
+		model.addAttribute("clientes", clientes);
+		return "listagemCliente";
+	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String redirect() {
+		return "redirect:/";
 	}
 }

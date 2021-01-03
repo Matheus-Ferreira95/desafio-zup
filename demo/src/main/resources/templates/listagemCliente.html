@@ -7,6 +7,28 @@
 		<a href="/cliente/cadastro" style="text-decoration:none"><span class="logo mt-3">Cadastrar</span></a>
 	</div>
 	
+	<form class="container" method="POST" action="/cliente/sort">
+				
+		<div class="form-check">
+			<h5>Ordenar pelo campo </h5>			
+				<input class="form-check-input" type="radio" id="orderBy" name="orderBy" value="nome" checked>
+				<label class="card-text" for="nome">nome</label><br>
+				<input class="form-check-input" type="radio" id="orderBy" name="orderBy" value="dataDeNascimento">
+				<label class="card-text" for="dataDeNascimento">data de nascimento</label>
+			
+		</div>	
+		<div class="form-check">	
+			<h5>Ordenar de maneira </h5>		
+				<input class="form-check-input" type="radio" id="direction" name="direction" value="ASC" checked>
+				<label for="ASC">Crescente </label><br>
+				<input class="form-check-input" type="radio" id="orderBy" name="direction" value="DESC">
+				<label for="DESC"> Decrescente </label><br>
+		</div>
+		
+		<button class="btn btn-primary mt-3" type="submit">Buscar</button>
+	
+	</form>
+		
 	<table class="container table table-striped">
 		<thead>
 			<tr>
@@ -18,7 +40,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="cliente : ${clientes}"> 
+			<tr th:if="${clientes} != null" th:each="cliente : ${clientes}"> 
 				<td><span th:text="${cliente.nome}"></span></td>
 				<td><span th:text="${cliente.email}"></span></td>
 				<td><span th:text="${cliente.cpf}"></span></td>
